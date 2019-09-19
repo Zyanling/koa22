@@ -142,6 +142,9 @@ function unique(arr) {
 1. 前后端分离
 2. 前端快速启动一个服务
 3. koa2解决跨域：
+  Koa2和express：koa2更轻便，需要的模块引入用就可以
+  Koa2:1.web服务框架可以让前端启动一个服务，2.前后端分离开发效率更好，更快捷，方便，前端可以自己控制版本的发布和消息的发送
+
     npm install koa-cors --save-dev
     var cors = require('koa-cors')
     app.use(cors())  // 放在route前面
@@ -152,6 +155,10 @@ function unique(arr) {
     4.引入webpack打包 
     5.引入react
     6.选择多页应用  （只需要引入每次打开页面的对应的打包的js文件就可以了）
+
+    react+koa2不足：1.seo不友好，2.初次加载耗时多 
+    传统的web加载方式，spa加载方式
+
 
 
 react-touter源码解读：
@@ -176,3 +183,60 @@ state对象：是一个 JavaScript 对象，它与创建的新历史记录条目
 状态对象可以是任何可以序列化的对象。因为 Firefox 将状态对象保存到用户的磁盘，因此可以在用户重新启动浏览器后恢复它们，因此我们在状态对象的序列化表示强加了 640k 字符的大小限制。
 title：Firefox 目前忽略了这个参数，虽然它可能在将来使用它。可以传入一个 null。
 URL：此历史记录条目的 URL 由此参数指定。请注意，浏览器在调用后不会尝试加载此 URL，但可能会稍后尝试加载 URL，例如在用户重新启动浏览器之后。新 URL 不一定是绝对的；如果是相对的，则相当于当前 URL 进行解析。新 URL 必须与当前 URL 的源相同；否则，pushState() 将抛出异常。此参数可选，如果未指定，则将其设置为文档当前的 URL。
+
+
+6.react优化点，这样优化的好处，优化了什么
+1.bing函数优化：
+  1.constructor绑定
+  constructor(props) {
+      super(props);
+      this.handleClick = this.handleClick.bind(this); //构造函数中绑定
+  }
+  //然后可以
+  <p onClick={this.handleClick}>
+  2.使用时绑定<p onClick={this.handleClick.bind(this)}>
+  3.使用箭头函数：<Test click={() => { this.handleClick() }}/>
+  以上三种第一种最优。因为第一种构造函数只在组件初始化的时候执行一次
+  第二种组件每次render都会执行
+  第三种在每一次render时候都会生成新的箭头函数。例：Test组件的click属性是个箭头函数，组件重新渲染的时候Test组件就会因为这个新生成的箭头函数而进行更新，从而产生Test组件的不必要渲染。
+2.不要滥用props；
+  prosp尽量只传需要的数据，避免多余的更新，尽量避免使用{...props};
+3.列表类组件优化：
+  key属性在组件类之外提供了另一种方式的组件标识。通过key标识，在组件发生增删改，排序等操作时，可以根据key值位置直接调整dom顺序，告诉react避免不必要的渲染而避免性能的浪费。
+  var items = sortBy(this.state.sortingAlgorithm, this.props.items);
+  return items.map(function(item){
+    return <img src={item.src} />
+  });
+  当顺序发生改变时，react会对元素进行diff操作，并改img的src属性。显示，这样的操作效率是非常低的。这时，我们可以为组件添加一个key属性以唯一的标识组件：
+  return <img src={item.src} key={item.id} />
+  增加key后，react 就不是diff，而是直接使用insertBefore操作移动组件位置，而这个操作是移动DOM节点最高效的办法
+4.组件尽可能的进行拆分，解耦
+组件尽可能的细分，比如一个input+list组件，可以将list分成一个PureComponent，只在list数据变化时更新。否则在input值变化页面重新渲染的时候，list也需要进行不必要的DOM diff。
+5.shouldComponentUpdate避免重复渲染
+大部分情况下，你可以使用React.PureComponent而不必写你自己的shouldComponentUpdate，它只做一个浅比较。但是当你比较的目标为引用类型数据，浅比较会忽略属性或状态突变的情况，此时你不能使用它，此时你需要关注下面的不可突变数据。
+
+6.懒加载
+7.强缓存
+  app.use(require('koa-static')(path.join(__dirname, '/public'), {
+    maxage: 365 * 24 * 60 * 60
+  }));
+8.gzip压缩
+const compress =require('koa-compress');
+app.use(compress({threshold:2048}));
+
+7.purecomponent和component的区别
+为什么用PureComponent?
+PureComponent 是优化 React 应用程序最重要的方法之一，易于实施，只要把继承类从 Component 换成 PureComponent 即可，可以减少不必要的 render 操作的次数，从而提高性能，而且可以少写 shouldComponentUpdate 函数，节省了点代码。
+原理：
+当组件更新时，如果组件的props和state都没有发生改变，render方法就不会触发，省去Virtual dom的生成和对比的过程，达到提升性能的目的。
+
+8.js执行机制 https://baijiahao.baidu.com/s?id=1615713540466951098&wfr=spider&for=pc
+  1.理解js单线程的概念 
+    同一个时间只能做一件事。那么，为什么JavaScript不能有多个线程呢？这样能提高效率啊。
+    JavaScript的单线程，与它的用途有关。作为浏览器脚本语言，JavaScript的主要用途是与用户互动，以及操作DOM。这决定了它只能是单线程，否则会带来很复杂的同步问题。比如，假定JavaScript同时有两个线程，一个线程在某个DOM节点上添加内容，另一个线程删除了这个节点，这时浏览器应该以哪个线程为准？所以，为了避免复杂性，从一诞生，JavaScript就是单线程，这已经成了这门语言的核心特征，将来也不会改变。
+  2.理解任务队列（消息队列）
+    单线程就意味着所有的任务队列需要排队，前一个任务结束，才会执行后一个任务。如果前一个任务耗时很长，后一个任务就不得不一直等着。javascript 语言的
+
+9.浏览器缓存机制（强缓存，弱缓存）
+
+10.

@@ -7,6 +7,7 @@ clean-webpack-plugin 用于编译前，清空编译目录
 
 1.this 指向
 
+```
 1.this的指向在函数定义的时候是确定不了的，只有函数执行的时候才能确定this到底指向谁，实际上this的最终指向的是那个调用它的对象 。 // https://www.cnblogs.com/pssp/p/5216085.html
 2.当this遇到return 时：如果返回值是一个对象，那么this指向的就是那个返回的对象，如果返回值不是一个对象那么this还是指向函数的实例。还有一点就是虽然null也是对象，但是在这里this还是指向那个函数的实例，因为null比较特殊
     function fn(){  
@@ -30,9 +31,9 @@ clean-webpack-plugin 用于编译前，清空编译目录
     }
     var a = new fn;  
     console.log(a.user); //追梦子    
-
+```
 2.es6的继承
-
+```
 关键点
 1、class 可以理解为function,由于class本质还是一个function,因此它也会拥有一个的prototype属性，当new一个class时，会把class的porototype属性赋值给这个新对象的 __proto属性。
 2、constructor 方法是默认添加的方法，在new一个对象时，自动调用该方法，constructor里面定义自己的属性。
@@ -76,9 +77,10 @@ clean-webpack-plugin 用于编译前，清空编译目录
   myBird.eat()
   myBird.fly()
   myBird.myattr()
+```
 
 3.数组去重复
-
+```
 1.利用es6 set去重复
 function unique (arr) {
   return Array.from(new Set(arr))
@@ -126,19 +128,20 @@ function unique(arr) {
 
 5.[...new Set(arr)]
 [...new Set(arr)] 
-
+```
 
 4.async 比promise的好处  （https://blog.csdn.net/xufeiayang/article/details/80484116）
-
+```
 1.简约而干净 （不需要then，catch）
 2.错误处理   （Promise内部的错误，我们只能再嵌套一层try/catch，用await就可以解决）
 3.条件判断    （我们需要先拉取数据，然后根据得到的数据判断是否输出此数据，或者根据数据内容拉取更多的信息。需要嵌套多层，写法辣眼睛）
 4.多个promise连接时，写法嵌套多层  改进promise.all）
 5.链式调用了很多promise，出错时log信息不明朗 
 6.不能打断点 （在一个返回表达式的箭头函数中，我们不能设置断点）
-
+```
 
 5.koa2的作用：
+```
 1. 前后端分离
 2. 前端快速启动一个服务
 3. koa2解决跨域：
@@ -183,9 +186,10 @@ state对象：是一个 JavaScript 对象，它与创建的新历史记录条目
 状态对象可以是任何可以序列化的对象。因为 Firefox 将状态对象保存到用户的磁盘，因此可以在用户重新启动浏览器后恢复它们，因此我们在状态对象的序列化表示强加了 640k 字符的大小限制。
 title：Firefox 目前忽略了这个参数，虽然它可能在将来使用它。可以传入一个 null。
 URL：此历史记录条目的 URL 由此参数指定。请注意，浏览器在调用后不会尝试加载此 URL，但可能会稍后尝试加载 URL，例如在用户重新启动浏览器之后。新 URL 不一定是绝对的；如果是相对的，则相当于当前 URL 进行解析。新 URL 必须与当前 URL 的源相同；否则，pushState() 将抛出异常。此参数可选，如果未指定，则将其设置为文档当前的 URL。
-
+```
 
 6.react优化点，这样优化的好处，优化了什么
+```
 1.bing函数优化：
   1.constructor绑定
   constructor(props) {
@@ -223,20 +227,24 @@ URL：此历史记录条目的 URL 由此参数指定。请注意，浏览器在
 8.gzip压缩
 const compress =require('koa-compress');
 app.use(compress({threshold:2048}));
+```
 
 7.purecomponent和component的区别
+```
 为什么用PureComponent?
 PureComponent 是优化 React 应用程序最重要的方法之一，易于实施，只要把继承类从 Component 换成 PureComponent 即可，可以减少不必要的 render 操作的次数，从而提高性能，而且可以少写 shouldComponentUpdate 函数，节省了点代码。
 原理：
 当组件更新时，如果组件的props和state都没有发生改变，render方法就不会触发，省去Virtual dom的生成和对比的过程，达到提升性能的目的。
+```
 
 8.js执行机制 https://baijiahao.baidu.com/s?id=1615713540466951098&wfr=spider&for=pc
+```
   1.理解js单线程的概念 
     同一个时间只能做一件事。那么，为什么JavaScript不能有多个线程呢？这样能提高效率啊。
     JavaScript的单线程，与它的用途有关。作为浏览器脚本语言，JavaScript的主要用途是与用户互动，以及操作DOM。这决定了它只能是单线程，否则会带来很复杂的同步问题。比如，假定JavaScript同时有两个线程，一个线程在某个DOM节点上添加内容，另一个线程删除了这个节点，这时浏览器应该以哪个线程为准？所以，为了避免复杂性，从一诞生，JavaScript就是单线程，这已经成了这门语言的核心特征，将来也不会改变。
   2.理解任务队列（消息队列）
     单线程就意味着所有的任务队列需要排队，前一个任务结束，才会执行后一个任务。如果前一个任务耗时很长，后一个任务就不得不一直等着。javascript 语言的
-
+```
 9.浏览器缓存机制（强缓存，弱缓存）
 
 10.

@@ -1,0 +1,70 @@
+{
+  "name": "koa2",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "start": "cross-env NODE_ENV=production GENERATE_SOURCEMAP=false node bin/www",
+    "dev": "cross-env NODE_ENV=development GENERATE_SOURCEMAP=false node bin/www",
+    "build": "cross-env NODE_ENV=production GENERATE_SOURCEMAP=false webpack --config webpack.config.js",
+    "dev-build": "cross-env NODE_ENV=development GENERATE_SOURCEMAP=false webpack --config webpack.config.js"
+  },
+  "devDependencies": {
+    "@babel/core": "7.1.0",
+    "@babel/plugin-proposal-class-properties": "7.1.0",
+    "@babel/plugin-proposal-decorators": "7.1.0",
+    "@babel/plugin-transform-runtime": "7.4.4",
+    "@babel/polyfill": "7.0.0",
+    "@babel/preset-env": "7.1.0",
+    "@babel/preset-react": "7.0.0",
+    "@material-ui/icons": "3.0.2",
+    "@r-ui/fetch": "0.12.0",
+    "@tongdun/ai-ui": "1.0.19",
+    "babel-loader": "8.0.0",
+    "copy-to-clipboard": "3.0.8",
+    "css-loader": "1.0.0",
+    "js-prettier-loader": "0.0.1",
+    "less": "3.8.0",
+    "less-loader": "4.1.0",
+    "prettier": "1.15.3",
+    "react": "16.5.0",
+    "react-dom": "16.5.0",
+    "react-markdown": "4.1.0",
+    "style-loader": "0.23.0",
+    "url": "0.11.0",
+    "webpack": "4.20.0",
+    "webpack-cli": "3.1.0",
+    "webpack-dev-middleware": "3.4.0",
+    "webpack-hot-middleware": "2.24.3"
+  },
+  "dependencies": {
+    "@babel/runtime": "7.4.5",
+    "antd": "3.19.8",
+    "babel-plugin-import": "1.11.2",
+    "bizcharts": "^3.5.3-beta.0",
+    "config": "3.0.1",
+    "cross-env": "5.2.0",
+    "echarts": "4.1.0",
+    "echarts-for-react": "^2.0.15-beta.0",
+    "keymaster": "1.6.2",
+    "koa": "2.7.0",
+    "koa-convert": "1.2.0",
+    "koa-mount": "4.0.0",
+    "koa-onerror": "4.1.0",
+    "koa-rewrite": "3.0.1",
+    "koa-router": "7.4.0",
+    "koa-static": "5.0.0",
+    "koa-views": "6.1.5",
+    "moment": "2.24.0",
+    "nunjucks": "3.1.7",
+    "prop-types": "15.6.2",
+    "wavesurfer.js": "2.1.0"
+  },
+  "pages": {
+    "config/data": {
+      "path": "/config/data"
+    },
+    "config/menu": {
+      "path": "/config/menu"
+    }
+  }
+}

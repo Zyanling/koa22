@@ -1,0 +1,42 @@
+{% extends "layout/default.njk" %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block head -%}
+{##}    <link rel="stylesheet" href="/unpkg.com/@alifd/theme-aiui@0.1.0/dist/next.min.css"/>
+{##}    <link rel="stylesheet" href="/unpkg.com/highlight.js@9.15.8/styles/default.css"/>
+{% if (env == "dev") -%}
+{##}    <script src="/unpkg.com/@babel/polyfill@7.4.4/dist/polyfill.js"></script>
+{##}    <script src="/unpkg.com/whatwg-fetch@3.0.0/dist/fetch.umd.js"></script>
+{##}    <script src="/unpkg.com/react@16.5.0/umd/react.development.js"></script>
+{##}    <script src="/unpkg.com/react-dom@16.5.0/umd/react-dom.development.js"></script>
+{##}    <script src="/unpkg.com/moment@2.24.0/moment.js"></script>
+{##}    <script src="/unpkg.com/@alifd/next@1.11.8/dist/next-with-locales.min.js"></script>
+{##}    <script src="/unpkg.com/react-markdown@4.1.0/umd/react-markdown.js"></script>
+{##}    <script src="/unpkg.com/highlight.js@9.15.8/lib/highlight.js"></script>
+{% else -%}
+{##}    <script src="/unpkg.com/@babel/polyfill@7.4.4/dist/polyfill.min.js"></script>
+{##}    <script src="/unpkg.com/whatwg-fetch@3.0.0/dist/fetch.umd.js"></script>
+{##}    <script src="/unpkg.com/react@16.5.0/umd/react.production.min.js"></script>
+{##}    <script src="/unpkg.com/react-dom@16.5.0/umd/react-dom.production.min.js"></script>
+{##}    <script src="/unpkg.com/moment@2.24.0/moment.js"></script>
+{##}    <script src="/unpkg.com/@alifd/next@1.11.8/dist/next-with-locales.min.js"></script>
+{##}    <script src="/unpkg.com/react-markdown@4.1.0/umd/react-markdown.js"></script>
+{##}    <script src="/unpkg.com/highlight.js@9.15.8/lib/highlight.js"></script>
+{% endif -%}
+{##}    <script>
+{##}        window._env_ = {{ env | dump | safe }};
+{##}        window._api_base_ = {{ apiBase | dump | safe }};
+{##}        window._page_ = {{ page | dump | safe }};
+{##}        window._params_ = {{ params | dump | safe }};
+{##}        window._title_ = {{ title | dump | safe }};
+{##}        window._site_env_ = {{ siteEnv | dump | safe }};
+{##}    </script>
+{% endblock %}
+
+{% block main -%}
+{##}    <div id="root"></div>
+{##}    <script src="/assets/{{ version }}/Service.js"></script>
+{##}    <script src="/assets/{{ version }}/{{ page }}.js"></script>
+{% endblock %}
+

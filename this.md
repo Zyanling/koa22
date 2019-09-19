@@ -152,3 +152,28 @@ function unique(arr) {
     4.引入webpack打包 
     5.引入react
     6.选择多页应用  （只需要引入每次打开页面的对应的打包的js文件就可以了）
+
+
+react-touter源码解读：
+1.在一个web 应用中，改变url无非是2种方式，一种是利用超链接进行跳转，另一种是使用浏览器的前进和回退功能
+2.将history分为三类。
+           hashHistory 老版本浏览器的history
+           browserHistory h5的history
+           memoryHistory node环境下的history，存储在memory中
+
+History 接口不继承于任何属性。
+History.length（只读）：返回一个整数，该整数表示会话历史中元素的数目，包括当前加载的页。例如，在一个新的选项卡加载的一个页面中，这个属性返回 1。
+History.scrollRestoration：允许 web 应用程序在历史导航上显式地设置默认滚动恢复行为。此属性可以是自动的（auto）或者手动的（manual）。
+History.state（只读）：返回一个历史堆栈顶部的状态的值。这是一种可以不必等待 popstate 事件而查看状态的方式。
+方法
+History 接口不继承任何方法。
+History.back()：前往上一页，用户可点击浏览器左上角的返回按钮模拟此方法，等价于：history.go(-1)。
+History.forward()：在浏览器历史记录里前往下一页，用户可点击浏览器左上角的前进按钮模拟此方法，等价于：history.go(1)。History.go()：通过当前页面的相对位置从浏览器历史记录（绘会话记录）加载页面。比如：参数为 -1 的时候为上一页，参数为 1 的时候为下一页。当整数超出界限、调用没有参数的 go() 方法、不是整数的参数时，没有效果，也不会报错。
+History.pushState()：按指定的名称和 URL（如果提供该参数）将数据 push 进会话历史栈，数据被 DOM 进行不透明处理。
+History.replaceState()：按指定的数据，名称和 URL（如果提供该参数），更新历史栈上最新的入口。这个数据被 DOM 进行了不透明处理。History.pushState(),History.replaceState()只会修改url中的路径，并不会对当前的页面进行刷新
+接收可以三个参数：状态对象、标题（被忽略）、URL（可选）
+state对象：是一个 JavaScript 对象，它与创建的新历史记录条目相关联。每当用户导航到新状态时，popstate 都会触发事件，并且 state 事件的属性包含历史记录条目的状态对象的副本。
+状态对象可以是任何可以序列化的对象。因为 Firefox 将状态对象保存到用户的磁盘，因此可以在用户重新启动浏览器后恢复它们，因此我们在状态对象的序列化表示强加了 640k 字符的大小限制。
+title：Firefox 目前忽略了这个参数，虽然它可能在将来使用它。可以传入一个 null。
+URL：此历史记录条目的 URL 由此参数指定。请注意，浏览器在调用后不会尝试加载此 URL，但可能会稍后尝试加载 URL，例如在用户重新启动浏览器之后。新 URL 不一定是绝对的；如果是相对的，则相当于当前 URL 进行解析。新 URL 必须与当前 URL 的源相同；否则，pushState() 将抛出异常。此参数可选，如果未指定，则将其设置为文档当前的 URL。
+

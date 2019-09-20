@@ -186,6 +186,21 @@ state对象：是一个 JavaScript 对象，它与创建的新历史记录条目
 状态对象可以是任何可以序列化的对象。因为 Firefox 将状态对象保存到用户的磁盘，因此可以在用户重新启动浏览器后恢复它们，因此我们在状态对象的序列化表示强加了 640k 字符的大小限制。
 title：Firefox 目前忽略了这个参数，虽然它可能在将来使用它。可以传入一个 null。
 URL：此历史记录条目的 URL 由此参数指定。请注意，浏览器在调用后不会尝试加载此 URL，但可能会稍后尝试加载 URL，例如在用户重新启动浏览器之后。新 URL 不一定是绝对的；如果是相对的，则相当于当前 URL 进行解析。新 URL 必须与当前 URL 的源相同；否则，pushState() 将抛出异常。此参数可选，如果未指定，则将其设置为文档当前的 URL。
+
+
+要实现前端路由，需要解决两个核心： （来自：https://juejin.im/post/5cd8d609e51d456e7b372155#heading-6）
+1.如何改变url却不引起页面刷新
+2.如何检测url变化了
+下面分别是hash和history两种实现方式回答上面的核心问题。
+
+hash实现：
+1.hash是url中hash(#)及后面的那部分，常用作锚点在页面内进行导航，hash 是 URL 中 hash (#) 及后面的那部分，常用作锚点在页面内进行导航，改变 URL 中的 hash 部分不会引起页面刷新
+2.通过 hashchange和load 事件监听 URL 的变化，改变 URL 的方式只有这几种：通过浏览器前进后退改变 URL、通过<a>标签改变 URL、通过window.location改变URL，这几种情况改变 URL 都会触发 hashchange 事件
+
+history实现：
+1.history提供了pushsState和replaceState两个方法，这两个方法改变url的path部分不会引起页面刷新。
+2.history提供类似hashchange事件的popstate事件，但是popstate事件有些不同：通过浏览器前进后退改变url时会触发popstate事件，通过pushState/replaceState或<a>标签改变 URL 不会触发 popstate 事件。好在我们可以拦截 pushState/replaceState的调用和<a>标签的点击事件来检测 URL 变化，所以监听 URL 变化可以实现，只是没有 hashchange 那么方便。
+
 ```
 
 6.react优化点，这样优化的好处，优化了什么
@@ -402,4 +417,20 @@ JS的执行机制就可以看做是一个主线程加上一个任务队列(task 
 
 
 
-16.webpack4之提升Webpack打包速度的方法
+16.Webpack打包速度的方法（来源自：https://blog.csdn.net/mnhn456/article/details/82758215）：
+  背景：对于webpack来说，默认的配置都是单线程的，并没有充分利用电脑cpu的资源，可以充分利用cpu实现多线程打包和压缩项目，以达到节省编译时间的目的。
+
+
+17:react 16之后的生命周期
+
+18:redux 工作流程
+
+19:dva
+
+20:高阶组件解决的问题
+  高阶组件的作用就是为了组件之间的代码复用。组件可能有着某些相同的逻辑，把这些逻辑抽离出来，放到高阶组件中进行复用
+  高阶组件包装的新组件和原来的组件之间通过props传递信息，减少代码的重复程度。
+
+
+21:虚拟dom是什么
+vdom可以看作是一个使用javascript模拟了dom结构的树形结构，这个树结构包含了整个dom结构的信息。

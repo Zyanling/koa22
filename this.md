@@ -271,6 +271,24 @@ PureComponent 是优化 React 应用程序最重要的方法之一，易于实�
 11.React setState流程解析 https://segmentfault.com/a/1190000015463599?utm_source=tag-newest
 为什么有时连续两次setState只有一次生效？
 https://blog.csdn.net/sinat_17775997/article/details/88226732
+解读为什么直接修改this.state无效:
+要知道setState本质是通过一个队列机制实现state更新的。 执行setState时，会将需要更新的state合并后放入状态队列，而不会立刻更新state，队列机制可以批量更新state。
+如果不通过setState而直接修改this.state，那么这个state不会放入状态队列中，下次调用setState时对状态队列进行合并时，会忽略之前直接被修改的state，这样我们就无法合并了，而且实际也没有把你想要的state更新上去。
+
+什么是批量更新：就是将一段时间内对model的修改批量更新到view的机制
+setState之后发生的事情：React在setState之后，会经对state进行diff，判断是否有改变，然后去diff dom决定是否要更新UI。如果这一系列过程立刻发生在每一个setState之后，就可能会有性能问题。
+在短时间内频繁setState。React会将state的改变压入栈中，在合适的时机，批量更新state和视图，达到提高性能的效果。
+总结
+1.通过setState去更新this.state，不要直接操作this.state，请把它当成不可变的。
+2.调用setState更新this.state不是马上生效的，它是异步滴，所以不要天真以为执行完setState后this.state就是最新的值了。
+3.多个顺序执行的setState不是同步地一个一个执行滴，会一个一个加入队列，然后最后一起执行，即批处理
+
+ ```
+1.setState不会立刻改变React组件中state的值.
+2.setState通过触发一次组件的更新来引发重绘.
+3.多次setState函数调用产生的效果会合并。
+
+ ```
 
 12:js判断两个对象是否相等,https://blog.csdn.net/weixin_38098192/article/details/82768207
 

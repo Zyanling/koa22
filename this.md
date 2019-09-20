@@ -276,10 +276,67 @@ https://blog.csdn.net/sinat_17775997/article/details/88226732
 
 
 13:什么是跨域？有什么解决方法？
+由于浏览器的同源策略，凡是发送请求url的协议，域名、端口三者之间任意一与当前页面地址不同即为跨域。存在跨域的情况：
+    1.网络协议不同，如http协议访问https协议。
+    2.端口不同，如80端口和8088端口。
+    3.域名不同，如qianduanblog.com访问baidu.com。
+    4.子域名不同，如abc.qianduanblog.com访问def.qianduanblog.com。
+    5.域名和域名对应ip,如www.a.com访问20.205.28.90.
+
+    跨域请求资源的方法：
+    1.(1)、porxy代理
+    定义和用法：proxy代理用于将请求发送给后台服务器，通过服务器来发送请求，然后将请求的结果传递给前端。
+    实现方法：通过nginx代理；
+    注意点：1、如果你代理的是https协议的请求，那么你的proxy首先需要信任该证书（尤其是自定义证书）或者忽略证书检查，否则你的请求无法成功。
+    2.CORS
+    使用方法：一般需要后端人员在处理请求数据的时候，添加允许跨域的相关操作。如下：
+    res.writeHead(200, {
+    "Content-Type": "text/html; charset=UTF-8",
+    "Access-Control-Allow-Origin":'http://localhost',
+    'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+    'Access-Control-Allow-Headers': 'X-Requested-With, Content-Type'
+    })
+    3.jsonp
+    定义和用法：通过动态插入一个script标签。浏览器对script的资源引用没有同源限制，同时资源加载到页面后会立即执行（没有阻塞的情况下）。
+    特点：通过情况下，通过动态创建script来读取他域的动态资源，获取的数据一般为json格式。
+    实例如下：
+
+
+<script>
+    function testjsonp(data) {
+       console.log(data.name); // 获取返回的结果
+    }
+</script>
+<script>
+    var _script = document.createElement('script');
+    _script.type = "text/javascript";
+    _script.src = "http://localhost:8888/jsonp?callback=testjsonp";
+    document.head.appendChild(_script);
+</script>
+缺点：
+　　1、这种方式无法发送post请求（这里）
+　　2、另外要确定jsonp的请求是否失败并不容易，大多数框架的实现都是结合超时时间来判定
+
 
 14:js隐视转换，显示转换原理
 
 
-15.从输入URL到页面加载发生了什么  https://www.jianshu.com/p/a877684a4cdd
+15.从输入URL到页面加载发生了什么 
+总体来说6个过程。
+```
+1.dns解析
+2.tcp连接
+3.发送http请求
+4.服务器处理请求并返回http报文
+5.浏览器解析渲染页面
+6.连接结束
+
+dns解析:
+网址到IP地址的转换，这个过程就是DNS解析
+首先在本地域名服务器中查询IP地址，如果没有找到的情况下，本地域名服务器会向根域名服务器发送一个请求，如果根域名服务器也不存在该域名时，本地域名会向com顶级域名服务器发送一个请求，依次类推下去。直到最后本地域名服务器得到google的IP地址并把它缓存到本地，供下次查询使用。从上述过程中，可以看出网址的解析是一个从右向左的过程: com -> google.com -> www.google.com。但是你是否发现少了点什么，根域名服务器的解析过程呢？事实上，真正的网址是www.google.com.，并不是我多打了一个.，这个.对应的就是根域名服务器，默认情况下所有的网址的最后一位都是.，既然是默认情况下，为了方便用户，通常都会省略，浏览器在请求DNS的时候会自动加上，所有网址真正的解析过程为: . -> .com -> google.com. -> www.google.com.。
+```
+
+
+
 
 16.webpack4之提升Webpack打包速度的方法

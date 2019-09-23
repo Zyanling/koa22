@@ -82,7 +82,8 @@
             
  async语法：
     1.返回Promise对象 ；async函数内部return语句返回的值，会成为then方法回调函数的参数。
-    2.Promise 对象的状态变化。async函数返回的 Promise 对象，必须等到内部所有await命令后面的 Promise 对象执行完，才会发生状态改变，除非遇到return语句或者抛出错误。也就是说，只有async函数内部的异步操作执行完，才会执行then方法指定的回调函数。  
+    2.Promise 对象的状态变化。async函数返回的 Promise 对象，必须等到内部所有await命令后面的 Promise 对象执行完，
+        才会发生状态改变，除非遇到return语句或者抛出错误。也就是说，只有async函数内部的异步操作执行完，才会执行then方法指定的回调函数。  
     3.await命令： await命令后面是一个 Promise 对象，返回该对象的结果。如果不是 Promise 对象，就直接返回对应的值
                 await命令后面的 Promise 对象如果变为reject状态，则reject的参数会被catch方法的回调函数接收到。
         async function f() {
@@ -128,7 +129,7 @@
             // hello world
 
         4.错误处理：
-                
+
 ```
 ## 3.class的基本语法
 ## 4.class的继承

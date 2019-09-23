@@ -1,5 +1,5 @@
 
-## 学习地址：http://es6.ruanyifeng.com/#docs/async#%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95
+#### 学习地址：http://es6.ruanyifeng.com/#docs/async#%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95
 ## 1.promise:
  ```
   含义：是异步编程的一种解决方案。比传统的解决方案--回调函数/事件--更合理和更强大。

@@ -41,8 +41,94 @@
     3.返回值是promise。async函数的返回值是 Promise 对象。你可以用then方法指定下一步的操作。
     4.async函数完全可以看作多个异步操作，包装成的一个 Promise 对象，而await命令就是内部then命令的语法糖
   基本用法：
-    
-    
+  async函数返回一个 Promise 对象，可以使用then方法添加回调函数。当函数执行的时候，一旦遇到await就会先返回，等到异步操作完成，再接着执行函数体内后面的语句。
+  函数前面的async关键字，表明该函数内部有异步操作。调用该函数时，会立即返回一个Promise对象。
+  async function getStockPriceByName(name){
+      const symbol=await getStockSymbol(name);
+      const stockPrice=await getStockPrice(symbol);
+      return stockPrice;
+  } 
+  getStockPriceByName("good").then((result)=>{
+      console.log(result);
+  })
+  async有多种形式：
+        // 函数声明
+        async function foo() {}
+
+        // 函数表达式
+        const foo = async function () {};
+
+        // 对象的方法
+        let obj = { async foo() {} };
+        obj.foo().then(...)
+
+        // Class 的方法
+        class Storage { 
+        constructor() {
+            this.cachePromise = caches.open('avatars');
+        }
+
+        async getAvatar(name) {
+            const cache = await this.cachePromise;
+            return cache.match(`/avatars/${name}.jpg`);
+        }
+        }
+
+        const storage = new Storage();
+        storage.getAvatar('jake').then(…);
+
+        // 箭头函数
+        const foo = async () => {};
+            
+ async语法：
+    1.返回Promise对象 ；async函数内部return语句返回的值，会成为then方法回调函数的参数。
+    2.Promise 对象的状态变化。async函数返回的 Promise 对象，必须等到内部所有await命令后面的 Promise 对象执行完，才会发生状态改变，除非遇到return语句或者抛出错误。也就是说，只有async函数内部的异步操作执行完，才会执行then方法指定的回调函数。  
+    3.await命令： await命令后面是一个 Promise 对象，返回该对象的结果。如果不是 Promise 对象，就直接返回对应的值
+                await命令后面的 Promise 对象如果变为reject状态，则reject的参数会被catch方法的回调函数接收到。
+        async function f() {
+            await Promise.reject('出错了');
+            }
+
+            f()
+            .then(v => console.log(v))
+            .catch(e => console.log(e))
+            // 出错了
+         注意，上面代码中，await语句前面没有return，但是reject方法的参数依然传入了catch方法的回调函数。这里如果在await前面加上return，效果是一样的。
+                任何一个await语句后面的 Promise 对象变为reject状态，那么整个async函数都会中断执行。   
+
+    async function f() {
+        await Promise.reject('出错了');
+        await Promise.resolve('hello world'); // 不会执行
+        }
+    上面代码中，第二个await语句是不会执行的，因为第一个await语句状态变成了reject。
+
+    有时，我们希望即使前一个异步操作失败，也不要中断后面的异步操作。这时可以将第一个await放在try...catch结构里面，这样不管这个异步操作是否成功，第二个await都会执行。
+        async function f() {
+        try {
+            await Promise.reject('出错了');
+        } catch(e) {
+        }
+        return await Promise.resolve('hello world');
+        }
+
+        f()
+        .then(v => console.log(v))
+        // hello world
+
+        另一种方法是await后面的 Promise 对象再跟一个catch方法，处理前面可能出现的错误。
+        async function f() {
+            await Promise.reject('出错了')
+                .catch(e => console.log(e));
+            return await Promise.resolve('hello world');
+            }
+
+            f()
+            .then(v => console.log(v))
+            // 出错了
+            // hello world
+
+        4.错误处理：
+                
 ```
 ## 3.class的基本语法
 ## 4.class的继承

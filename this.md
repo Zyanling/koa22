@@ -536,7 +536,7 @@ promise:
         p的状态：只要p1、p2、p3之中有一个实例率先改变状态，p的状态就跟着改变。那个率先改变的 Promise 实例的返回值，就传递给p的回调函数。
         Promise.race方法的参数与Promise.all方法一样，如果不是 Promise 实例，就会先调用下面讲到的Promise.resolve方法，将参数转为 Promise 实例，再进一步处理。
     Promise.resolve()
-        
-
+        有时需要将现有对象转为 Promise 对象，Promise.resolve方法就起到这个作用。
     Promise.reject()
+        方法也会返回一个新的 Promise 实例，该实例的状态为rejected。
 ```

@@ -40,4 +40,17 @@ async:
     3.返回值是promise。async函数的返回值是 Promise 对象。你可以用then方法指定下一步的操作。
     4.async函数完全可以看作多个异步操作，包装成的一个 Promise 对象，而await命令就是内部then命令的语法糖
   基本用法：
+    
+    
 ```
+class的基本语法
+class的继承
+module
+数组的扩展
+对象的扩展和新增方法
+函数的扩展
+let 和const
+变量的解构赋值
+异步遍历器
+
+

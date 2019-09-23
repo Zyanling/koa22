@@ -444,11 +444,58 @@ vue中2.0以后每个组件都有一个watcher，用虚拟dom比对。
 vdom如何使用？面我将使用snabbdom的用法介绍一下vdom的使用
 
 属性更新：src/core/vdom/patch.js  550行开始
-         src/platforms/web/runtime/modules/index.js
+       src/platforms/web/runtime/modules/index.js
 
 22.弹性布局的api
+```
 http://www.360doc.com/content/18/0819/23/43682464_779579321.shtml
 
+  1.了解基本概念：
+    1.容器：需要添加弹性布局的父元素；
+    2.项目：弹性布局容器中的每一个子项目；
+  2.基本方向：
+    1.主轴：水平/垂直方向为主轴
+    2.交叉轴：与主轴垂直的另一个方向，称为交叉轴
+  3.使用：
+    给父容器添加diaplay:flex/inline-flex;即可使容器采用弹性布局显示。容器添加弹性布局之后，而容器自身在文档中的定位方式依然遵循常规文档流。
+    display:flex;显示为块级元素
+    display:inline-block;显示为行级元素；
+    给flex布局后，子元素的float，clear,vertical-align属性将失效，但是position属性依然生效。
+    12大属性：6个作用域父容器，6个作用于子项目。
+
+    作用于父容器的6大属性：
+    1.flex-direction属性决定主轴的方向。
+        row(默认值):主轴为水平方向，起点在左端。row-reverse：主轴为水平方向，起点在右端。
+        column：主轴为垂直方向，起点在上沿。column-reverse：主轴为垂直方向，起点在下沿。
+    2.flex-wrap 如果一条轴线排不下，如何换行。nowrap：不换行。wrap：换行，并且第一行在容器最上方。wrap-reverse:换行并且第一行在容器最下方。
+    3.flex-flow：是flex-direction和flex-wrap的缩写形式。
+    4.justify-content：定义了项目在主轴上的对其方式。
+        flex-start:项目位于主轴起点。flex-end：项目位于主轴终点。center：居中。space-between：两端对其，项目之间的间隔都相等。
+        space-around:每个项目两侧的间隔相等。
+    5.align-items:定义项目在交叉轴上如何对其。
+        flex-start：交叉轴的起点对齐。
+        flex-end：交叉轴的终点对齐。
+        center：交叉轴的中点对齐。
+        baseline: 项目的第一行文字的基线对齐。(文字的行高、字体大小会影响每行的基线)
+        stretch（默认值）：如果项目未设置高度或设为auto，将占满整个容器的高度。
+    6.align-content属性定义了多根轴线的对齐方式。如果项目只有一根轴线，该属性不起作用。
+        flex-start：与交叉轴的起点对齐。
+        flex-end：与交叉轴的终点对齐。
+        center：与交叉轴的中点对齐。
+        space-between：与交叉轴两端对齐，轴线之间的间隔平均分布。
+        space-around：每根轴线两侧的间隔都相等。所以，轴线之间的间隔比轴线与边框的间隔大一倍。
+        stretch（默认值）：轴线占满整个交叉轴。
+
+  作用于子项目的6大属性：
+        1.order:定义项目的排列顺序。数值越小，排列越靠前，默认为0。
+        2.flex-grow:定义项目的放大比例。默认为0，即如果存在剩余空间，也不放大。
+        3.flex-shrink:定义项目的缩小比例。默认为1，即如果空间不足，该项目将缩小。
+        4.flex-basis定义项目占据的主轴空间。（如果主轴为水平，则设置这个属性，相当于设置项目的宽度。 原width将会失效。）
+        5. flex属性是flex-grow, flex-shrink 和 flex-basis的简写，默认值为0 1 auto。后两个属性可选。
+        6.align-self:定义单个项目自身在交叉轴上的排列方式，可以覆盖掉容器上的align-items属性。
+          属性值：与align-items相同，默认值为auto，表示继承父容器的align-items属性值
+
+```
 
 23.some和every方法，es6
 every()检测 如果该函数对每一项返回true,则返回true。

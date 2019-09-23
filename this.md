@@ -432,5 +432,32 @@ JS的执行机制就可以看做是一个主线程加上一个任务队列(task 
   高阶组件包装的新组件和原来的组件之间通过props传递信息，减少代码的重复程度。
 
 
-21:虚拟dom是什么
-vdom可以看作是一个使用javascript模拟了dom结构的树形结构，这个树结构包含了整个dom结构的信息。
+21:虚拟dom是什么 （三w1h，what是什么，why有什么好处，where在哪用，how怎么用）
+虚拟dom就是个js对象，和真实dom有一个关系的映射，她也是一颗树，其中的属性描述了dom的具体结构
+1.vdom可以看作是一个使用javascript模拟了dom结构的树形结构，这个树结构包含了整个dom结构的信息。
+为什么要使用虚拟DOM？
+1.渲染DOM是非常非常消耗性能的，常常会出现页面卡死的情况；所以尽量减少对DOM的操作成为了优化前端性能的必要手段，vdom就是将DOM的对比放在了js层，通过对比不同之处来选择新渲染DOM节点，从而提高渲染效率。
+2.跨平台，兼容性好，性能好
+3.在哪用
+vue中2.0以后每个组件都有一个watcher，用虚拟dom比对。
+读源码时发现渲染函数，返回的是一个虚拟dom，渲染函数是编译器产生的
+vdom如何使用？面我将使用snabbdom的用法介绍一下vdom的使用
+
+属性更新：src/core/vdom/patch.js  550行开始
+         src/platforms/web/runtime/modules/index.js
+
+22.弹性布局的api
+http://www.360doc.com/content/18/0819/23/43682464_779579321.shtml
+
+
+23.some和every方法，es6
+every()检测 如果该函数对每一项返回true,则返回true。
+some()检测 如果该函数对任一项返回true，则返回true。
+
+24:position
+absolute:生成绝对定位，相对于最近的relative第一个父元素进行定位。
+fixed:生成绝对定位的元素，相对于浏览器窗口进行定位。
+relative:生成相对定位的元素，相对于其正常位置进行定位。
+static:默认值。没有定位，元素出现在正常的流中
+inherit:规定应该从父元素继承 position 属性的值。
+

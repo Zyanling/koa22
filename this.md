@@ -508,3 +508,61 @@ relative:生成相对定位的元素，相对于其正常位置进行定位。
 static:默认值。没有定位，元素出现在正常的流中
 inherit:规定应该从父元素继承 position 属性的值。
 
+
+防抖和截流
+事件机制
+CommonJS模块与ES6模块的区别差异：
+1.commonjs模块输出的是一个值的拷贝，es6模块输出的是值的引用。
+2.commonjs模块是运行时加载，ex6模块是编译时输出接口。
+
+解释2:
+commonjs加载的是一个对象，该对象只在脚本运行完才会生成。而es6模块不是对象，他的对外接口只是一种静态定义，在代码静态解析阶段就会生成。
+解释1:
+CommonJS 模块输出的是值的拷贝，也就是说，一旦输出一个值，模块内部的变化就影响不到这个值。
+例如：
+  //lib.js
+  var counter=3;
+  function incCounter(){
+    counter++;
+  }
+  module.exports={
+    counter:counter,
+    incCounter:incCounter,
+  }
+  上面的代码输出内部变量个改写这个变量的内部方法incCounter。然后在main.js中加载这个模块。
+  //main.js
+  var mod=require("./lib");
+  console.log(mod.counter) //3;
+  mod.incCounter(); 
+  console.log(mod.counter) //3;
+  上面的代码说明，lib.js模块加载以后，它的背部变化就影响不到输出的mod.counter。这是因为
+
+
+
+
+fetch中，如果请求超过3s，做请求拦截
+fetch中添加请求超时，需要用到Promise.race()方法。
+Promise.race([p1,new Promise((resolve,reject)=>{
+  setTimeot(()=>{reject( new error("请求超时"))},3000)
+})])
+
+
+
+URL到界面显示发生了什么?
+1.DNS解析
+先本地缓存找，在一层层找
+将常见的地址解析成唯一对应的ip地址基本顺序为：本地域名服务器->根域名服务器->com顶级域名服务器依次类推下去,找到后记录并缓存下来如www.google.com为. -> .com -> google.com. -> www.google.com.
+2.TCP连接 三次握手，只要没收到确认消息就要重新发
+主机向服务器发送一个建立连接的请求（您好，我想认识您）；
+服务器接到请求后发送同意连接的信号（好的，很高兴认识您）；
+主机接到同意连接的信号后，再次向服务器发送了确认信号（我也很高兴认识您），自此，主机与服务器两者建立了连接。
+3.发送HTTP请求
+浏览器会分析这个url，并设置好请求报文发出。
+4.服务器处理请求并返回HTTP报文
+5.浏览器解析渲染页面
+通过HTML解析器解析HTML文档，构建一个DOM Tree，同时通过CSS解析器解析HTML中存在的CSS，构建Style Rules，两者结合形成一个Attachment。
+通过Attachment构造出一个呈现树（Render Tree）
+Render Tree构建完毕，进入到布局阶段（layout/reflow），将会为每个阶段分配一个应出现在屏幕上的确切坐标。
+最后将全部的节点遍历绘制出来后，一个页面就展现出来了。
+遇到script会停下来执行，所以通常把script放在底部
+6.连接结束

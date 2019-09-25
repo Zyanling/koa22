@@ -39,4 +39,7 @@ class Component extends React.Component {
 }
 
 
+
+
+
 export default layout((Component), module)

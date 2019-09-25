@@ -132,13 +132,161 @@
 
 ```
 ## 3.class的基本语法
+    好处：1.让对象原型的写法更加清晰   2.更像面向对象编程的语法
+    传统的构造函数：
+        function Point(x, y) {
+            this.x = x;
+            this.y = y;
+            }
+
+            Point.prototype.toString = function () {
+            return '(' + this.x + ', ' + this.y + ')';
+        };
+
+        var p = new Point(1, 2);
+
+     es6中的构造函数：
+        class Point {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+            }
+
+            toString() {
+                return '(' + this.x + ', ' + this.y + ')';
+            }
+            toValue(){}
+        }
+    Point === Point.prototype.constructor // true （类本身就指向构造函数）
+    
+    // 等同于
+    Point.prototype = {
+    constructor() {},
+    toString() {},
+    toValue() {},
+    };
+    // 等同于：
+    Object.assign(Point.prototype, {
+        toString(){},
+        toValue(){}
+    });
+
+
+class B {}
+let b = new B();
+b.constructor === B.prototype.constructor // true
+上面代码中，b是B类的实例，它的constructor方法就是B类原型的constructor方法。
+
+constructor 方法 ：
+    constructor方法是类的默认方法，通过new命令生成对象实例时，自动调用该方法。一个类必须有constructor方法，如果没有显式定义，一个空的constructor方法会被默认添加。
+    
+    class Point {}
+    // 等同于
+    class Point {
+    constructor() {}
+    }
+类的实例：
+    类必须使用new调用，否则会报错
+    var point = new Point(2, 3);
+   
+    类的所有实例共享一个原型对象。
+    var p1 = new Point(2,3);
+    var p2 = new Point(3,2);
+    p1.__proto__ === p2.__proto__
+    上面代码中，p1和p2都是Point的实例，它们的原型都是Point.prototype，所以__proto__属性是相等的。
+    这也意味着，可以通过实例的__proto__属性为“类”添加方法。
+    p1.__proto__.printName = function () { return 'Oops' };
+    p1.printName() // "Oops"
+    p2.printName() // "Oops"
+    var p3 = new Point(4,2);
+    p3.printName() // "Oops"
+    上面代码在p1的原型上添加了一个printName方法，由于p1的原型就是p2的原型，因此p2也可以调用这个方法。而且，此后新建的实例p3也可以调用这个方法。这意味着，使用实例的__proto__属性改写原型，必须相当谨慎，不推荐使用，因为这会改变“类”的原始定义，影响到所有实例。
+
+取值函数（getter）和存值函数（setter）
+    在“类”的内部可以使用get和set关键字，对某个属性设置存值函数和取值函数，拦截该属性的存取行为。
+    class MyClass {
+        constructor() {
+            // ...
+        }
+        get prop(){
+            return "getter"
+        }
+        set prop(value){
+            console.log("setter:"+value)
+        }
+    }
+    let inst=new MyClass();
+    inst.prop=123;//// setter: 123
+    inst.prop;  //"getter"
+    
+属性表达式 :
+    let methodName = 'getArea';
+        class Square {
+            constructor(length) {
+                // ...
+            }
+
+            [methodName]() {
+                // ...
+            }
+        }
+Class 表达式
+    const MyClass = class { /* ... */ };
+    立即执行：
+    let person = new class {
+    constructor(name) {
+        this.name = name; //this，它默认指向类的实例.但是，必须非常小心，一旦单独使用该方法，很可能报错。
+    }
+
+    sayName() {
+        console.log(this.name);
+    }
+    }('张三');
+
+    person.sayName(); // "张三"  
+
 ## 4.class的继承
 ## 5.module
+export：
+    // profile.js
+    var firstName = 'Michael';
+    var lastName = 'Jackson';
+    var year = 1958;
+    //输出变量
+    export { firstName, lastName, year };
+    //输出函数/类
+    export function multiply(x, y) {
+        return x * y;
+    };
+    通常情况下，export输出的变量就是本来的名字，但是可以使用as关键字重命名。下面代码使用as关键字，重命名了函数v1和v2的对外接口。重命名后，v2可以用不同的名字输出两次。
+    function v1() { ... }
+    function v2() { ... }
+    export {
+    v1 as streamV1,
+    v2 as streamV2,
+    v2 as streamLatestVersion
+    };
+
+import 命令：
+import { firstName, lastName, year } from './profile.js';
+function setName(element) {
+  element.textContent = firstName + ' ' + lastName;
+}
+上面代码的import命令，用于加载profile.js文件，并从中输入变量。import命令接受一对大括号，里面指定要从其他模块导入的变量名。大括号里面的变量名，必须与被导入模块（profile.js）对外接口的名称相同。如果想为输入的变量重新取一个名字，import命令要使用as关键字，将输入的变量重命名。
+import { lastName as surname } from './profile.js';
+
 ## 6.数组的扩展
 ## 7.对象的扩展和新增方法
 ## 8.函数的扩展
 ## 9.let 和const
 ## 10.变量的解构赋值
 ## 11.异步遍历器
+
+
+
+
+
+
+
 
 

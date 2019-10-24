@@ -15,7 +15,7 @@ jsx：react是通过创建与更新虚拟元素来管理整个vdom的。
 
 
 二：
-合成事件的实现机制：
+合成事件的实现机制： 来自：https://www.cnblogs.com/chrissong/p/10212348.html，https://www.cnblogs.com/mengff/p/9631919.html
 ```
 1.事件委派：它并不会把事件处理函数直接绑定到真实的节点上，而是把所有事件绑定到结构的最外层，使用一个统一的事件监听器，这个事件监听器上维持了一个映射来保存所有组件内部的事件监听和处理函数。当组件挂载或者卸载时，只是在这个统一的事件监听器上插入或删除一些对象，当事件发生时，首先被这个统一的事件监听器处理，然后在映射里找到真正的事件处理函数并调用。这样做简化了事件处理和回收机制，效率得到很大的提升。
 2.自动绑定：1.bind方法。这个方法可以帮助我们绑定事件处理器内的this，并可以向事件处理器中传递参数。
@@ -62,3 +62,18 @@ jsx：react是通过创建与更新虚拟元素来管理整个vdom的。
 css预处理器：编译器对原样式代码进行词法分析，产生 Token 序列。接着，语法分析，生成中间表示，一棵符合定义的 AST。同时，还会为每个程序块建立一个符号表来记录变量的名字，属性，为代码生成阶段的变量作用域分析提供帮助。最后，递归下降访问 AST，生成能够在浏览器环境中直接执行的 CSS 代码。
 ```
 
+setState更新机制：来自：https://www.cnblogs.com/katydids/p/10014111.html
+    当this.setState()被调用的时候，react会重新渲染render方法来重新渲染ui。
+    state和props的区别：state是可以改变的，是组件内部维护的一组用于反映ui变化的状态的集合，而props对于使用它的组件来说是只读的，要想修改props，只能通过该组件的父组件修改。父组件正是通过子组件的props传递给子组件其所需要的状态。
+    state的值在修改之后并不会立即被修改，而是有一个队列，setState通过一个队列机制实现state的更新。当执行setState时，会把需要更新的state合并后放入状态队列，而不会立即更新this.state，利用这个队列机制可以高效的批量的更新state。
+    它的主要流程如下：  
+        1、当调用setState时，实际上会执行enqueueSetState方法，并对partialState以及_pendingStateQueue更新队列进行合并，最终通过enqueueUpdate执行state更新
+        2、 如果组件当前正处于update事务中，则先将Component存入dirtyComponent中。否则调用batchedUpdates处理。而performUpdateIfNecessary方法获取_pendingElement、_pendingStateQueue、_pendingForceUpdate，并调用reciveComponent和updateComponent方法进行组件更新。
+        3、batchedUpdates发起一次transaction.perform()事务
+        4、开始执行事务初始化，运行，结束三个阶段
+           初始化：事务初始化阶段没有注册方法，故无方法要执行
+            运行：执行setSate时传入的callback方法，一般不会传callback参数
+             结束：更新isBatchingUpdates为false，并执行FLUSH_BATCHED_UPDATES这个wrapper中的close方法
+        5、FLUSH_BATCHED_UPDATES在close阶段，会循环遍历所有的dirtyComponents，调用updateComponent刷新组件，并执行它的pendingCallbacks, 也就是setState中设置的callback。
+
+ 

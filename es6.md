@@ -286,7 +286,18 @@ import { lastName as surname } from './profile.js';
 
 
 
+匿名函数
+function(){}
+命名函数 var handleClick=function(){}   function handleClick(){}
+立即执行函数  (function IIFE(){ .. }) 
+(function IIFE(){ .. }) 函数表达式外面的 ( .. ) 就是 JavaScript 语法能够防止其成为普通函数声明的部分。
+表达式最后的 ()(即 })(); 这一行)实际上就表示立即执行前面给出的函数表达式。
 
+function foo() { .. }
+// foo函数引用表达式，然后()执行它 foo();
 
-
-
+ var foo = {
+         a: 42
+};
+// 创建bar并将其链接到foo
+var bar = Object.create( foo );

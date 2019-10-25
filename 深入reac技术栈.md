@@ -77,4 +77,42 @@ setState更新机制：来自：https://www.cnblogs.com/katydids/p/10014111.html
             结束：更新isBatchingUpdates为false，并执行FLUSH_BATCHED_UPDATES这个wrapper中的close方法
         5、FLUSH_BATCHED_UPDATES在close阶段，会循环遍历所有的dirtyComponents，调用updateComponent刷新组件，并执行它的pendingCallbacks, 也就是setState中设置的callback。
 ```
- 
+ react ref 
+ ```
+    1.string 
+        class MyComponent extends React.Component {
+            componentDidMount() {
+                this.refs.myRef.focus();
+            }
+            render() {
+                return <input ref="myRef" />;
+            }
+        }
+
+    2.callback ref
+    class MyComponent extends React.Component {
+        componentDidMount() {
+            this.myRef.focus();
+        }
+        render() {
+            return <input ref={(ele) => {
+            this.myRef = ele;
+            }} />;
+        }
+        }
+
+    3.React.createRef
+    class MyComponent extends React.Component {
+        constructor(props) {
+            super(props);
+            this.myRef = React.createRef();
+        }
+        componentDidMount() {
+            this.myRef.current.focus();
+        }
+        render() {
+            return <input ref={this.myRef} />;
+        }
+    }
+
+ ```

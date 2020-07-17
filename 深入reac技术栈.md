@@ -137,3 +137,20 @@ react-fiber是什么？官方的解释：reatc fiber是对核心算法的一次�
 在react fiber中，一次更新过程会分成多个分片完成，所以完全有可能一个更新任务还没完成，就被另一个更高优先级的更新过程打断，这时候，优先级高的更新任务会优先处理完，而低优先级更新任务所做的工作完全作废，然后等待机会重头再来。
 因为一个更新过程可能会被打断，所以react fiber一个更新过程被分为两个阶段，第一个阶段：Reconciliation Phase 第二阶段：Commit Phase。在第一个阶段react fiber会找出需要更新哪些dom，这个阶段可以被打断的，第二个阶段：一鼓作气把dom更新完，绝不会被打断。因为第一阶段会被打断而且’重头再来‘，就会造成意想不到的情况。比如：一个低优先级的任务a正在执行，已经调用了某个组件的componentWillUpdate函数，接下来发现自己的时间分片已经用完了，于是冒出水面，看看有没有紧急任务，哎呀，真的有一个紧急任务B，接下来React Fiber就会去执行这个紧急任务B，任务A虽然进行了一半，但是没办法，只能完全放弃，等到任务B全搞定之后，任务A重头来一遍，注意，是重头来一遍，不是从刚才中段的部分开始，也就是说，componentWillUpdate函数会被再调用一次。在现有的React中，每个生命周期函数在一个加载或者更新过程中绝对只会被调用一次；在React Fiber中，不再是这样了，第一阶段中的生命周期函数在一次加载和更新过程中可能会被多次调用！
 ```
+
+生命周期：getDerivedStateFromProps：来自：https://www.jianshu.com/p/50fe3fb9f7c3
+ ```
+ getDerivedStateFromProps:从props中获取state。这个生命周期的功能实际上就是将：传入的props映射到state上面。这个函数会在每次re-rendering之前被调用。这意味着：即使你的props没有任何变化，而是父state发生了变化，却可能导致很多隐含的问题。
+ ```
+ ```
+ 使用：这个生命周期的函数代替了componentWillReceiveProps，所以你需要使用componentWillReceiveProps的时候，就可以考虑使用getDerivedStateFromProps来进行代替。
+ 两者的参数是不相同的，getDerivedStateFromProps是一个静态函数，也就是这个函数不能通过this访问到class的属性，也并不推荐直接访问属性。而是应该通过参数的nextProps以及prevState来进行判断，根据传入的props来映射到state。需要注意的是，如果props传入的内容不需要影响到你的state，那么就返回一个null，这个返回值是必须的，所以尽量写到函数的末尾。
+ static getDerivedStateFromProps(nextProps,prevState){
+    const { type } = nextProps
+    if (type != prevState.type) {
+        return { type }
+    }
+    return null
+ }
+ ```
+

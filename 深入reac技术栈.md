@@ -172,7 +172,11 @@ sourcemap是什么？有什么作用？生产环境中怎么使用？
 开发环境中使用：cheap-module-eval-source-map
 生产环境中使用：cheap-module-source-map
 ```
-webpack热更新原理?(HMR)：来自：https://segmentfault.com/a/1190000020310371
+webpack热更新原理?(HMR)：来自：https://segmentfault.com/a/1190000020310371.  https://www.jianshu.com/p/652fbae768bf
  ```
  HMR即hot module replacement是指当你对代码修改并保存后，webpack将会对代码进行重新打包，并将改动的模块发送到浏览器端，浏览器用新的模块替换掉旧的模块，去实现局部更新页面而非整体刷新页面。
+ 原理过程：
+    1.webpack在编译期，为需要热更新的entry注入热更新代码（EventSource通知） 2.页面首次打开后，服务端与客户端通过EventSource建立通信渠道，把下一次的hash返回前端
+    3.客户端获取到hash，这个hash将作为下一次请求服务端hot-update.js和hot-update.json的hash 4.修改页面代码之后，webpack监听到文件修改后，开始编译，编译完成后，发送build消息给客户端
+    5.客户端获取到hash，成功后客户端构造hot-update.js script链接，然后插入主文档  6.hot-update.js 插入成功后，执行hotAPI 的 createRecord 和 reload方法，获取到 Vue 组件的 render方法，重新 render 组件， 继而实现 UI 无刷新更新
  ```

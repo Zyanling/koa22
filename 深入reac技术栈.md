@@ -180,3 +180,8 @@ webpack热更新原理?(HMR)：来自：https://segmentfault.com/a/1190000020310
     3.客户端获取到hash，这个hash将作为下一次请求服务端hot-update.js和hot-update.json的hash 4.修改页面代码之后，webpack监听到文件修改后，开始编译，编译完成后，发送build消息给客户端
     5.客户端获取到hash，成功后客户端构造hot-update.js script链接，然后插入主文档  6.hot-update.js 插入成功后，执行hotAPI 的 createRecord 和 reload方法，获取到 Vue 组件的 render方法，重新 render 组件， 继而实现 UI 无刷新更新
  ```
+什么是消息队列、宏任务与微任务？ 来自：https://www.yuque.com/luhengchang/blog/xlttgp
+```
+事件循环：浏览器的渲染主线程每时每刻都需要接收新的事件，执行事件。因此需要采用事件循环机制，不断循环监听是否有新的事件需要被接收并执行。事件循环是js实现异步的一种方法，也是js的执行机制。
+浏览器的渲染主线程需要处理各种事件，比如鼠标的点击，资源下载完成，文件读写等事件。但是这些事件被频繁出发，比如用户多次点击
+```

@@ -172,6 +172,7 @@ sourcemap是什么？有什么作用？生产环境中怎么使用？
 开发环境中使用：cheap-module-eval-source-map
 生产环境中使用：cheap-module-source-map
 ```
+
 webpack热更新原理?(HMR)：来自：https://segmentfault.com/a/1190000020310371.  https://www.jianshu.com/p/652fbae768bf
  ```
  HMR即hot module replacement是指当你对代码修改并保存后，webpack将会对代码进行重新打包，并将改动的模块发送到浏览器端，浏览器用新的模块替换掉旧的模块，去实现局部更新页面而非整体刷新页面。
@@ -180,6 +181,7 @@ webpack热更新原理?(HMR)：来自：https://segmentfault.com/a/1190000020310
     3.客户端获取到hash，这个hash将作为下一次请求服务端hot-update.js和hot-update.json的hash 4.修改页面代码之后，webpack监听到文件修改后，开始编译，编译完成后，发送build消息给客户端
     5.客户端获取到hash，成功后客户端构造hot-update.js script链接，然后插入主文档  6.hot-update.js 插入成功后，执行hotAPI 的 createRecord 和 reload方法，获取到 Vue 组件的 render方法，重新 render 组件， 继而实现 UI 无刷新更新
  ```
+
 什么是消息队列、宏任务与微任务？ 来自：https://www.yuque.com/luhengchang/blog/xlttgp
 ```
 事件循环：浏览器的渲染主线程每时每刻都需要接收新的事件，执行事件。因此需要采用事件循环机制，不断循环监听是否有新的事件需要被接收并执行。事件循环是js实现异步的一种方法，也是js的执行机制。
@@ -200,18 +202,20 @@ react-router的实现原理 参考：https://blog.csdn.net/tangzhl/article/detai
 ```
 react-router的基本原理：实现url和ui界面的同步。其中在react-router中，url对应location对象，而ui是由raect components来决定的，这样就转变成location与components之间的同步问题。
 react-router的实现：依赖第三方库history。history分为三类：1.hashHistory:通常应用于老版本浏览器，主要通过hash来实现  2.browserHistory:通常应用于高版本浏览器，通过html5中的history来实现的  3.memoryHistory:node环境中，主要存储在memory中
-
 ```
+ 
  防抖和节流：来自https://www.jianshu.com/p/ae7df3b64341
 ```
 防抖和节流的作用是：防止函数多次调用。防抖和节流的本质是不一样的。防抖是将多次执行变为最后一次执行，节流是将多次执行变成每隔一段时间执行。区别在于：假设一个用户一只处罚者函数，且每次出发函数的间隔小于wait，防抖的情况下只会调用一次，而节流的情况会每隔一定时间调用函数。
 ```
+
 form表单提交没有跨域问题，但ajax提交存在跨域问题 来自：https://www.cnblogs.com/tangjiao/p/9951477.html
 ```
 浏览器的策略本质是：一个域名下面的js，没有经过允许是不能读取另外一个域名的内容。但是浏览器不阻止你向另外一个域名发送请求。
 所以form表单提交没有跨域问题，提交form表单到另外一个域名，原来页面是无法获取新页面的内容，或者说form提交后不需要返回，但是ajax是需要返回的。
 而ajax是想要读取响应内容，浏览器是不允许你这么做的。世界本无跨域，是浏览器不允许js访问别的域，但是浏览器却没有限制自己。
 ```
+
 事件冒泡--关于浏览器的事件流 来自：https://www.cnblogs.com/litterjoan/articles/5652184.html  https://blog.csdn.net/qq_31965515/article/details/83897214
 ```
 事件流：描述的是从页面中接受事件的顺序。包含三部分：事件捕获阶段 ，处于目标阶段，事件冒泡阶段。
@@ -229,8 +233,8 @@ btn.addEventListener(eventType, function () {
 事件委托的原理：事件冒泡。
 优点：1.可以大量节省内存，减少事件的注册，比如ul上代理所有的click事件。 2.可以实现当新增子对象时，无需再对其进行事件绑定，对于动态内容部分尤其合适。
 缺点：如果把所有事件都用事件代理，可能会出现事件误判。即本不应该被触发的事件被绑上了事件。
-
 ```
+
 cookie和token都存放在header中，为什么不会劫持token？
  ```
  token不是为了防止XSS的，而是为了防止CSRF的。CSRF攻击的原因是：浏览器会自动带上cookie，而不会带上token。

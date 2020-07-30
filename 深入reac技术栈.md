@@ -231,3 +231,4 @@ btn.addEventListener(eventType, function () {
 缺点：如果把所有事件都用事件代理，可能会出现事件误判。即本不应该被触发的事件被绑上了事件。
 
 ```
+cookie和token都存放在header中，为什么不会劫持token？

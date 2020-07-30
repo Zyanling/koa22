@@ -232,3 +232,13 @@ btn.addEventListener(eventType, function () {
 
 ```
 cookie和token都存放在header中，为什么不会劫持token？
+ ```
+ token不是为了防止XSS的，而是为了防止CSRF的。CSRF攻击的原因是：浏览器会自动带上cookie，而不会带上token。
+ 以CSRF攻击为例：
+ cookie：用户点击了链接，cookie未失效，导致发起请求后后端以为是用户正常操作，于是进行扣款操作。
+ token：用户点击链接，由于浏览器不会自动带上token，所以即使发了请求，后端的token验证不会通过，所以不会进行扣款操作。
+ 如果一个用户的 token 被其他用户劫持了，怎样解决这个安全问题
+1.在存储的时候把token进行对称加密存储，用时解开
+2.将请求url，时间戳，token三者进行合并加盐签名，服务端校验有效性
+3.https对url进行判断。
+ ```

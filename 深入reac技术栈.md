@@ -195,3 +195,11 @@ webpack热更新原理?(HMR)：来自：https://segmentfault.com/a/1190000020310
  ```
  
  ```
+
+react-router的实现原理 参考：https://blog.csdn.net/tangzhl/article/details/79696055  https://www.jianshu.com/p/53dc287a8020
+```
+react-router的基本原理：实现url和ui界面的同步。其中在react-router中，url对应location对象，而ui是由raect components来决定的，这样就转变成location与components之间的同步问题。
+react-router的实现：依赖第三方库history。history分为三类：1.hashHistory:通常应用于老版本浏览器，主要通过hash来实现  2.browserHistory:通常应用于高版本浏览器，通过html
+react-router的实现：依赖第三方库history。history分为三类：1.hashHistory:通常应用于老版本浏览器，主要通过hash来实现  2.browserHistory:通常应用于高版本浏览器，通过html5
+```
+ 宏任务实战：

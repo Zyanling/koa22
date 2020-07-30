@@ -202,4 +202,6 @@ react-router的基本原理：实现url和ui界面的同步。其中在react-rou
 react-router的实现：依赖第三方库history。history分为三类：1.hashHistory:通常应用于老版本浏览器，主要通过hash来实现  2.browserHistory:通常应用于高版本浏览器，通过html5中的history来实现的  3.memoryHistory:node环境中，主要存储在memory中
 
 ```
- 宏任务实战：
+ 防抖和节流：来自https://www.jianshu.com/p/ae7df3b64341
+```
+```

@@ -209,3 +209,6 @@ react-router的实现：依赖第三方库history。history分为三类：1.hash
 form表单提交没有跨域问题，但ajax提交存在跨域问题 来自：https://www.cnblogs.com/tangjiao/p/9951477.html
 ```
 ```
+事件冒泡--关于浏览器的事件流 来自：https://www.cnblogs.com/litterjoan/articles/5652184.html
+```
+```

@@ -305,8 +305,10 @@ forEach：遍历数组：遍历数组全部元素，不支持return操作输出�
 
 ```
 git撤销操作、分支操作和常见冲突 来自：https://www.cnblogs.com/cathy1024/p/10316154.html
-Webpack整个生命周期，Loader和Plugin有什么区别？
-```
 
+Webpack整个生命周期，Loader和Plugin有什么区别？来自https://www.cnblogs.com/tangjiao/p/10429645.html
+```
+loader: 用于加载某些资源文件。因为webpack只能理解javascript和json文件，对于其他资源例如css，图片，或者其他的语法集，比如jsx，coffee，是没有办法加载的。这就需对应的loader将资源转化，加载进来。loader是用于加载的，它作用于文件上。
+plugin：用于扩展webpack的功能。plugin的功能更加丰富，不仅局限于资源的加载。目的在于解决loader无法实现的其他事情。
 ```
 

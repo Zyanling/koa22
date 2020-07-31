@@ -272,3 +272,11 @@ session劫持一般发生在a和b建立连接之后的通信过程中。hacker�
  
  ```
 redux
+
+react如何实现按需加载（分模块加载）？
+```
+1.例如button：
+import Button from 'antd/lib/button';
+import 'antd/lib/button/style';
+2. 使用babel，用babel-plugin-import来实现同样的按需加载效果。
+```

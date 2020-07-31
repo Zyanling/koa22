@@ -283,8 +283,10 @@ import 'antd/lib/button/style';
 
 数组函数some、every、find、filter、map、forEach有什么区别 来自：https://blog.csdn.net/callmeCassie/article/details/88832836
 ```
+some，every，find：1.不会创建新数组 2. 不改变原数组  some：有一项判断为true，马上跳出循环return true。  every：有一项为false，马上跳出循环return false。 find：有一项为true马上跳出循环return 符合条件的数组。
 
 ```
 
-观察者模式，发布订阅模式，中介模式
+观察者模式，发布订阅模式，中介模式 来自：https://www.cnblogs.com/cathy1024/p/11392956.html
+
 git撤销操作、分支操作和常见冲突 来自：https://www.cnblogs.com/cathy1024/p/10316154.html

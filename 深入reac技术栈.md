@@ -285,3 +285,5 @@ import 'antd/lib/button/style';
 ```
 
 ```
+
+观察者模式，发布订阅模式，中介模式

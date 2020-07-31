@@ -287,3 +287,4 @@ import 'antd/lib/button/style';
 ```
 
 观察者模式，发布订阅模式，中介模式
+git撤销操作、分支操作和常见冲突 来自：https://www.cnblogs.com/cathy1024/p/10316154.html

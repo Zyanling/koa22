@@ -305,7 +305,16 @@ forEach：遍历数组：遍历数组全部元素，不支持return操作输出�
 
 ```
 git撤销操作、分支操作和常见冲突 来自：https://www.cnblogs.com/cathy1024/p/10316154.html
+```
+请注意：有些撤销操作是不可以逆的，所以使用时请务必小心
+1.修改最后一次提交（有时候我们提交玩了才发现漏掉了几个文件没有加，或者提交信息写错了，想要撤销刚才的提交操作，可以使用--amend选项重新提交）
+git commit --amend
+2.取消已经暂存的文件（例如：有两个修改过的文件README.txt，benchmarks.rb，我们想要分开提交，但不小心用git add .全部加到了暂存区域。该如何撤销暂存其中的一个文件呢？）
+取消暂存benchmarks.rb文件  git reset HEAD benchmarks.rb,现在benchmark.rb文件又回到了之前已经修改未暂存的状态
+3.取消对文件的修改（如果你觉得刚才对benchmark.rb的修改完全没有必要，该如何取消修改呢，回到修改之前的版本呢？）
+git checkout -- benchmarks.rb  这条命令有些危险，所有对文件的修改都没有了。
 
+```
 
 Webpack整个生命周期，Loader和Plugin有什么区别？来自https://www.cnblogs.com/tangjiao/p/10429645.html
 ```
